@@ -1,0 +1,24 @@
+{
+  "first_name":"AAA",
+  "middle_name":"BBB",
+  "last_name":"CCC",
+  "age":17,
+  "married":false,
+  "hobbies":[
+    "Gaming",
+    "Reading",
+    "Coding"
+  ],
+  "addresses":[
+    {
+      "street":"Jalan Dulu Aja",
+      "country":"Fatamorgana",
+      "postalCode":"1243455"
+    },
+    {
+      "street":"Ndak tau, kok tanya saya",
+      "country":"wakanda +26",
+      "postalCode":"265398"
+    }
+  ]
+}

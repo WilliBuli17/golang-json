@@ -1,0 +1,90 @@
+-- Pengenalan JSON
+        1. JSON singkatan dari JavaScript Object Notation, merupakan struktur format data yang bentuknya seperti Object di JavaScript
+        2. JSON merupakan struktur format data yang paling banyak digunakan saat kita membuat RESTful API
+        3. Dan pate kelas ini kita akan menggunakan JSON juga
+                https://www.json.org/json-en.html
+
+        -- Package json
+                1. Go-Lang sudah menyediakan package json, dimana kita bisa menggunakan package ini untuk melakukan konversi
+                   data ke JSON (encode) atau sebaliknya (decode)
+                        https://pkg.go.dev/encoding/json
+-- Encode JSON
+        1. Go-Lang telah menyediakan function untuk melakukan konversi data ke JSON, yaitu menggunakan function json.Marshal(interface{})
+        2. Karena parameter nya adalah interface{}, maka kita bisa masukan tipe data apapun ke dalam function Marshal
+
+-- JSON Object
+        1. Pada materi sebelumnya kita melakukan encode data seperti string, number, boolean, dan tipe data primitif lainnya
+        2. Walaupun memang bisa dilakukan, karena sesuai dengan kontrak interface{}, namun tidak sesuai dengan kontrak JSON
+        3. Jika mengikuti kontrak json.org, data JSON bentuknya adalah Object dan Array
+
+        -- Struct
+                1. JSON Object di Go-Lang direpresentasikan dengan tipe data Struct
+                2. Dimana tiap attribute di JSON Object merupakan attribute di Struct
+
+-- Decode JSON
+        1. Sekarang kita sudah tahu bagaimana caranya melakukan encode dari tipe data di Go-Lang ke JSON
+        2. Namun bagaimana jika kebalikannya?
+        3. Untuk melakukan konversi dari JSON ke tipe data di Go-Lang (Decode),
+           kita bisa menggunakan function json.Unmarshal(byte[], interface{})
+        5. Dimana byte[] adalah data JSON nya, sedangkan interface{} adalah tempat menyimpan hasil konversi, biasa berupa pointer
+
+-- JSON Array
+        1. Selain tipe dalam bentuk Object, biasanya dalam JSON, kita kadang menggunakan tipe data Array
+        2. Array di JSON mirip dengan Array di JavaScript, dia bisa berisikan tipe data primitif, atau tipe data kompleks (Object atau Array)
+        3. Di Go-Lang, JSON Array direpresentasikan dalam bentuk slice
+        4. Konversi dari JSON atau ke JSON dilakukan secara otomatis oleh package json menggunakan tipe data slice
+
+        -- Decode JSON Array
+                1. Selain menggunakan Array pada attribute di Object
+                2. Kita juga bisa melakukan encode atau decode langsung JSON Array nya
+                3. Encode dan Decode JSON Array bisa menggunakan tipe data Slice
+
+-- JSON Tag
+        1. Secara default atribut yang terdapat di Struct dan JSON akan di mapping sesuai dengan nama atribut  yang sama (case sensitive)
+        2. Kadang ada style yang berbeda antara penamaan atribute di Struct dan di JSON, misal di JSON kita ingin menggunakan snake_case,
+            tapi di Struct, kita ingin menggunakan PascalCase
+        3. Untungnya, package json mendukun Tag Reflection
+        4. Kita bisa menambahkan tag reflection dengan nama json, lalu diikuti dengan atribut yang kita inginkan ketika konversi dari atau ke JSON
+
+-- Map
+        1. Saat menggunakan JSON, kadang mungkin kita menemukan kasus data JSON nya dynamic
+        2. Artinya atribut nya tidak menentu, bisa bertambah, bisa berkurang, dan tidak tetap
+        3. Pada kasus seperti itu, menggunakan Struct akan menyulitkan, karena pada Struct, kita harus menentukan semua atribut nya
+        4. Untuk kasus seperti ini, kita bisa menggunakan tipe data map[string]interface{}
+        5. Secara otomatis, atribut akan menjadi key di map, dan value menjadi value di map
+        6. Namun karena value berupa interface{}, maka kita harus lakukan konversi secara manual jika ingin mengambil value nya
+        7. Dan tipe data Map tidak mendukung JSON Tag lagi
+
+-- Streaming Decoder
+        1. Sebelumnya kita belajar package json dengan melakukan konversi data JSON yang sudah dalam bentuk variable dan data string atau []byte
+        2. Pada kenyataanya, kadang data JSON nya berasal dari Input berupa io.Reader (File, Network, Request Body)
+        3. Kita bisa saja membaca semua datanya terlebih dahulu, lalu simpan di variable, baru lakukan konversi dari JSON,
+           namun hal ini sebenarnya tidak perlu dilakukan, karena package json memiliki fitur untuk membaca data dari Stream
+
+        -- json.Decoder
+                1. Untuk membuat json Decoder, kita bisa menggunakan function json.NewDecoder(reader)
+                1. Selanjutnya untuk membaca isi input reader dan konversikan secara langsung ke data di Go-Lang,
+                   cukup gunakan function Decode(interface{})
+
+-- Streaming Encoder
+        1. Selain decoder, package json juga mendukung membuat Encoder yang bisa digunakan untuk menulis langsung JSON nya ke io.Writer
+        2. Dengan begitu, kita tidak perlu menyimpan JSON datanya terlebih dahulu ke dalam variable string atau []byte,
+           kita bisa langsung tulis ke io.Writer
+
+        -- json.Encoder
+                1. Untuk membuat Encoder, kita bisa menggunakan function json.NewEncoder(writer)
+                2. Dan untuk menulis data sebagai JSON langsung ke writer, kita bisa gunakan function Encode(interface{})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
